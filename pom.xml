@@ -14,6 +14,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
     <spring.boot.version>2.0.6.RELEASE</spring.boot.version>
+    <opentracing-spring-jaeger-web-starter.version>3.1.1</opentracing-spring-jaeger-web-starter.version>
+    <app.name>orderservice-1</app.name>
   </properties>
 
   <dependencies>
@@ -46,6 +48,22 @@
       <artifactId>lombok</artifactId>
       <version>1.18.2</version>
     </dependency>
+    <!-- Distributed tracing with OpenTracing -->
+    <dependency>
+      <groupId>io.opentracing.contrib</groupId>
+      <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+      <version>${opentracing-spring-jaeger-web-starter.version}</version>
+    </dependency>
+
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
