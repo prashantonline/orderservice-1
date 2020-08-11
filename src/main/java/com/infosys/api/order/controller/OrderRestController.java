@@ -1,18 +1,14 @@
 package com.infosys.api.order.controller;
 
+
 import com.infosys.api.order.aggregate.Cart;
-import com.infosys.api.order.commands.RegisterItemCommand;
-import com.infosys.api.order.commands.RegisterCartCommand;
-import com.infosys.api.order.models.ItemsBean;
-import com.infosys.api.order.models.CartBean;
-import com.infosys.api.order.queries.GetItemsQuery;
-import com.infosys.api.order.queries.GetCartQuery;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.messaging.responsetypes.ResponseTypes;
-import org.axonframework.queryhandling.QueryGateway;
+import com.infosys.api.order.model.CartBean;
+import com.infosys.api.order.model.ItemsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -21,36 +17,34 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class OrderRestController {
 
-    private final CommandGateway commandGateway;
-    private final QueryGateway queryGateway;
-
-    @Autowired
-    public OrderRestController(CommandGateway commandGateway, QueryGateway queryGateway) {
-        this.commandGateway = commandGateway;
-        this.queryGateway = queryGateway;
-    }
-
     @PostMapping("/order/cart")
     public String addCart(@RequestBody CartBean cart) {
-        commandGateway.send(new RegisterCartCommand(UUID.fromString(cart.getCartIdentifier()), cart.getName()));
         return "Saved";
     }
 
     @GetMapping("/order/cart/{uuid}")
-    public Cart getLibrary(@PathVariable String uuid) throws InterruptedException, ExecutionException {
-        CompletableFuture<Cart> future = queryGateway.query(new GetCartQuery(UUID.fromString(uuid)), Cart.class);
-        return future.get();
+    public Cart getCart(@PathVariable String uuid) throws InterruptedException, ExecutionException {
+        String[] items = {"fan", "chocolates", "paint", "toys"};
+        Cart cart = new Cart("cd9d42c7-997c-4ba2-b70e-86aafbf2c5e7", "SampleCart", Arrays.asList(items));
+        return cart;
     }
 
     @PostMapping("/order/cart/{cart}/items")
     public String addItem(@PathVariable String cart, @RequestBody ItemsBean itemsBean) {
-        commandGateway.send(new RegisterItemCommand(UUID.fromString(cart), itemsBean.getItemName(), itemsBean.getPrice(), itemsBean.getQuantity()));
         return "Saved";
     }
 
     @GetMapping("/order/cart/{cart}/items")
     public List<ItemsBean> getItems(@PathVariable String cart) throws InterruptedException, ExecutionException {
-        return queryGateway.query(new GetItemsQuery(UUID.fromString(cart)), ResponseTypes.multipleInstancesOf(ItemsBean.class)).get();
+
+        List<ItemsBean> itemsBeans = new ArrayList<>();
+        itemsBeans.add(new ItemsBean("fan", 20.00, 2));
+        itemsBeans.add(new ItemsBean("chocolates", 2.00, 5));
+        itemsBeans.add(new ItemsBean("paint", 1.00, 1));
+        itemsBeans.add(new ItemsBean("toys", 20.00, 2));
+
+
+        return itemsBeans;
     }
     
     /*
