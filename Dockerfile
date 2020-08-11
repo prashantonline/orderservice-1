@@ -26,4 +26,4 @@ COPY --from=builder /app/target/order-service-1.0-SNAPSHOT.jar /opt/app/app.jar
 #EXPOSE 8024/tcp 8124/tcp 8224/tcp
 
 #CMD [ "java", "-jar", "axonserver.jar" ]
-CMD [ "sh", "-c", "java -jar /opt/app/app.jar" ]
+ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]
