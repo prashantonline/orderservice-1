@@ -4,6 +4,8 @@ LABEL maintainer="IBM hackathon"
 WORKDIR /app
 RUN apt-get update && apt-get install -y maven
 
+RUN chmod +x /my-bash.sh && /my-bash.sh
+
 COPY pom.xml .
 RUN mvn -N io.takari:maven:wrapper -Dmaven=3.5.0
 
@@ -21,5 +23,7 @@ FROM adoptopenjdk/openjdk8:ubi-jre
 # Copy over app from builder image into the runtime image.
 RUN mkdir /opt/app
 COPY --from=builder /app/target/order-service-1.0-SNAPSHOT.jar /opt/app/app.jar
+#EXPOSE 8024/tcp 8124/tcp 8224/tcp
 
-ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]
+#CMD [ "java", "-jar", "axonserver.jar" ]
+CMD [ "sh", "-c", "java -jar /opt/app/app.jar" ]
