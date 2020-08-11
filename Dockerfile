@@ -21,5 +21,6 @@ FROM adoptopenjdk/openjdk8:ubi-jre
 # Copy over app from builder image into the runtime image.
 RUN mkdir /opt/app
 COPY --from=builder /app/target/order-service-1.0-SNAPSHOT.jar /opt/app/app.jar
+RUN java -cp /opt/app/app.jar com.infosys.api.order.Application
 
 ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]
