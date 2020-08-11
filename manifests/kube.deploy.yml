@@ -10,7 +10,7 @@ spec:
   ports:
   # the port that this service should serve on
   - name: http
-    port: 80
+    port: 8080
 
   selector:
     app: "orderservice-1-selector"
