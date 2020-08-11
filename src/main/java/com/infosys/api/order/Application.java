@@ -42,7 +42,7 @@ public class Application extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }
-
+/*
     @Bean
     public io.opentracing.Tracer initTracer() {
         Configuration.SamplerConfiguration samplerConfig = new Configuration.SamplerConfiguration()
@@ -55,4 +55,5 @@ public class Application extends SpringBootServletInitializer {
                 .withSampler(samplerConfig)
                 .withReporter(reporterConfig).getTracer();
     }
+    */
 }
