@@ -53,8 +53,10 @@ public class OrderRestController {
         return queryGateway.query(new GetItemsQuery(UUID.fromString(cart)), ResponseTypes.multipleInstancesOf(ItemsBean.class)).get();
     }
     
+    /*
     @GetMapping("/health")
     public String getHealth() throws InterruptedException, ExecutionException {
         return "{\"status\": \"UP\"}";
     }
+    */
 }
