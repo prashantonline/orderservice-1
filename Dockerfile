@@ -3,6 +3,7 @@ LABEL maintainer="IBM hackathon"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y maven
+RUN docker run -d --name axonserver -p 8024:8024 -p 8124:8124 axoniq/axonserver
 
 COPY pom.xml .
 RUN mvn -N io.takari:maven:wrapper -Dmaven=3.5.0
