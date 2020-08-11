@@ -15,7 +15,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <spring.boot.version>2.0.6.RELEASE</spring.boot.version>
     <opentracing-spring-jaeger-web-starter.version>3.1.1</opentracing-spring-jaeger-web-starter.version>
-    <app.name>orderservice-1</app.name>
+    <app.name>orderservice</app.name>
   </properties>
 
   <dependencies>
@@ -48,13 +48,26 @@
       <artifactId>lombok</artifactId>
       <version>1.18.2</version>
     </dependency>
+    
     <!-- Distributed tracing with OpenTracing -->
     <dependency>
       <groupId>io.opentracing.contrib</groupId>
       <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
       <version>${opentracing-spring-jaeger-web-starter.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.ibm.cloud</groupId>
+      <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
+      <version>1.1.2</version>
+     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+     </dependency>
+     <dependency>
+       <groupId>io.micrometer</groupId>
+       <artifactId>micrometer-registry-prometheus</artifactId>
+     </dependency>
   </dependencies>
 
   <build>
@@ -62,13 +75,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-        <archive>
-        <manifest>
-        <mainClass>com.infosys.api.order.Application</mainClass>
-        </manifest>
-        </archive>
-        </configuration>
       </plugin>
     </plugins>
   </build>
