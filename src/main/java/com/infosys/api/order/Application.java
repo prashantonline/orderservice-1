@@ -18,10 +18,10 @@ import org.springframework.core.env.Environment;
 
 public class Application extends SpringBootServletInitializer {
 	
-    @Autowired
+   /* @Autowired
     Environment environment;
     @Value("${spring.application.name}")
-    private String applicationName;
+    private String applicationName;*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
