@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@ComponentScan({"com.infosys.api.order.*"})
+
 public class Application extends SpringBootServletInitializer {
 	
     @Autowired
@@ -27,6 +27,7 @@ public class Application extends SpringBootServletInitializer {
 		SpringApplication.run(Application.class);
 	}
 	
+   /*
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
@@ -35,7 +36,7 @@ public class Application extends SpringBootServletInitializer {
             System.out.println();
             System.out.println("Server started - http://localhost:" + port + "/health");
         };
-    }
+    }*/
 	
   @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
