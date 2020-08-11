@@ -21,7 +21,7 @@ FROM adoptopenjdk/openjdk8:ubi-jre
 # Copy over app from builder image into the runtime image.
 RUN mkdir /opt/app
 COPY --from=builder /app/target/order-service-1.0-SNAPSHOT.jar /opt/app/app.jar
-#EXPOSE 8024/tcp 8124/tcp 8224/tcp
 
-#CMD [ "java", "-jar", "axonserver.jar" ]
+ENV HOST=0.0.0.0 PORT=9080
+EXPOSE 9080/tcp
 ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]
