@@ -3,7 +3,16 @@ LABEL maintainer="IBM hackathon"
 
 WORKDIR /app
 RUN apt-get update && apt-get install -y maven
-RUN docker run -d --name axonserver -p 8024:8024 -p 8124:8124 axoniq/axonserver
+
+RUN addgroup -S -g 1001 axonserver \
+    && adduser -S -u 1001 -h /axonserver -D axonserver \
+    && mkdir -p /axonserver/config /axonserver/data /axonserver/events /axonserver/log \
+    && chown -R axonserver:axonserver /axonserver
+    
+COPY --from=source /etc/passwd /etc/group /etc/
+COPY --from=source --chown=axonserver /axonserver /axonserver
+
+COPY --chown=axonserver axonserver.jar axonserver.properties /axonserver/
 
 COPY pom.xml .
 RUN mvn -N io.takari:maven:wrapper -Dmaven=3.5.0
@@ -22,5 +31,7 @@ FROM adoptopenjdk/openjdk8:ubi-jre
 # Copy over app from builder image into the runtime image.
 RUN mkdir /opt/app
 COPY --from=builder /app/target/order-service-1.0-SNAPSHOT.jar /opt/app/app.jar
+EXPOSE 8024/tcp 8124/tcp 8224/tcp
 
-ENTRYPOINT [ "sh", "-c", "java -jar /opt/app/app.jar" ]
+CMD [ "java", "-jar", "axonserver.jar" ]
+CMD [ "sh", "-c", "java -jar /opt/app/app.jar" ]
