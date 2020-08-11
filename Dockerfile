@@ -4,8 +4,6 @@ LABEL maintainer="IBM hackathon"
 WORKDIR /app
 RUN apt-get update && apt-get install -y maven
 
-RUN chmod +x /my-bash.sh && /my-bash.sh
-
 COPY pom.xml .
 RUN mvn -N io.takari:maven:wrapper -Dmaven=3.5.0
 
